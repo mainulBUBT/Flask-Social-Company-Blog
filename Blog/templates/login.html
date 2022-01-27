@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+    <div class="login-page bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <h3 class="mb-3">Login Now</h3>
+                    <div class="bg-white shadow rounded">
+                        <div class="row">
+                            <div class="col-md-7 pe-0">
+                                <div class="form-left h-100 py-5 px-5">
+                                    <form action="" class="row g-4" method="POST">
+                                        {{ form.hidden_tag() }}
+                                        <div class="col-12">
+                                            {{ form.email.label(class="form-group")}}
+                                            <div class="input-group">
+                                                <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
+                                                {{ form.email(class="form-control", placeholder="Enter your email")}}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            {{ form.password.label(class="form-group")}}
+                                            <div class="input-group">
+                                                <div class="input-group-text"><i class="bi bi-lock-fill"></i></div>
+                                                {{ form.password(class="form-control", placeholder="Enter your password")}}
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            {{form.submit(class="btn btn-outline-dark px-4 float-end mt-4")}}
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-5 ps-0 d-none d-md-block">
+                                <div class="form-right h-100 bg-dark text-white text-center pt-5">
+                                    <img src="{{ url_for('static', filename='images/side.png') }}" alt="" width="250px">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- 
+
+
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.email.label(class="form-group")}} {{ form.email(class="form-control")}}
+        </div>
+        <div class="form-group">
+            {{ form.password.label(class="form-group") }} {{form.password(class="form-control") }}
+        </div>
+        <br>
+        <div class="form-group">
+            {{form.submit(class="btn btn-success btn-block")}}
+        </div>
+    </form> -->
+
+{% endblock %}

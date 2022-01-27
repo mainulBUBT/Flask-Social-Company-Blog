@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-3">Blog Post</h1>
+        <p class="lead">container-fluid</p>
+        <hr class="my-2">
+        <p>More info</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="Jumbo action link" role="button">Jumbo action name</a>
+        </p>
+    </div>
+</div>
+
+<div class="container">
+    {% for post in blog_posts.items %}
+    <div class="card">
+        <div class="card-body">
+            <h2><a href="{{ url_for('blog_posts.blog_post', blog_post_id=post.id) }}" class="card-title">{{ post.title }}</a></h2>
+            <p class="card-text">{{ post.text }}</p>
+            Written By: <a href="{{ url_for('users.user_posts',username=post.author.username) }}" class="card-link">{{ post.author.username }}</a>
+            <p class="text-muted">Published On: {{ post.date.strftime("%Y-%m-%d") }}</p>
+            <a href="{{ url_for('blog_posts.blog_post', blog_post_id=post.id) }}" class="btn btn-outline-primary">Read Blog Post</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {% for page_num in blog_posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if blog_posts.page == page_num %}
+        <li class="page-item disabled">
+            <a class="page-link" href="{{url_for( 'core.index',page=page_num )}}">{{ page_num }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" href="{{url_for( 'core.index',page=page_num )}}">{{ page_num }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</nav>
+
+
+{% endblock %}
